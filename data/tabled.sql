@@ -10,35 +10,13 @@ create table customer(
     c_phone VARCHAR(255) NOT NULL
 );
 
-create table mangaka(
-    auth_name varchar(255) primary key,
-    email varchar(255) not null
-);
-CREATE TABLE publisher(
-    p_name VARCHAR(255) PRIMARY KEY,
-    p_address VARCHAR(255) NOT NULL,
-    p_mail VARCHAR(255) NOT NULL,
-    p_phone VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE warehouse(
-    S_id VARCHAR(255) PRIMARY KEY,
-    S_num INT NOT NULL,
-    S_lot VARCHAR(255) NOT NULL
-);
-
 create table manga(
     ISBN VARCHAR(255) PRIMARY KEY,
-    author varchar(255) not null,
-    Foreign Key (author) REFERENCES mangaka(auth_name),
+    mangaka varchar(255) not null,
     title varchar(255) NOT null,
-    price FLOAT NOT NULL,
-    issue VARCHAR(255) NOT NULL,
-    volume INT NOT NULL,
-    published varchar(255) Not null,
-    Foreign Key (published) REFERENCES publisher (p_name),
-    S_id VARCHAR(255) NOT NULL,
-    Foreign Key (S_id) REFERENCES warehouse (S_id)
+    genre varchar(255) NOT null,
+    stock INT NOT null,
+    price INT NOT NULL,
 );
 
 CREATE TABLE shopping_basket(
@@ -47,11 +25,12 @@ CREATE TABLE shopping_basket(
     Foreign Key (c_id) REFERENCES customer(c_id)
 );
 
-CREATE TABLE container(
+CREATE TABLE orders(
     num_books INT NOT NULL,
     ISBN VARCHAR(255) NOT NULL,
     basket_id VARCHAR(255) NOT NULL,
     Foreign Key (ISBN) REFERENCES manga(ISBN),
-    Foreign Key (basket_id) REFERENCES shopping_basket(basket_id)
+    Foreign Key (basket_id) REFERENCES shopping_basket(basket_id),
+    Foreign Key (c_id) REFERENCES manga(c_id)
 );
 
