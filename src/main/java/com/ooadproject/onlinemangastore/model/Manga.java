@@ -26,7 +26,7 @@ public class Manga {
     private Integer productPrice;
 
     @Column(name = "available_quantity", nullable = false)
-    private String availableQuantity;
+    private Integer availableQuantity;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -76,7 +76,7 @@ public class Manga {
      *
      * @param availableQuantity the balance quantity
      */
-    public void setAvailableQuantity(String availableQuantity) {
+    public void setAvailableQuantity(Integer availableQuantity) {
         this.availableQuantity = availableQuantity;
     }
 
@@ -94,7 +94,7 @@ public class Manga {
      *
      * @return the product price
      */
-    public String getAvailableQuantity() {
+    public Integer getAvailableQuantity() {
         return availableQuantity;
     }
 
