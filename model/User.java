@@ -1,8 +1,6 @@
 package model;
 
-import observer.notifListener;
-
-public class User implements notifListener{
+public class User {
     private int ID;
     private String name;
     private String address;
@@ -66,12 +64,5 @@ public class User implements notifListener{
     
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    // Observer
-
-    @Override
-    public void update() {
-        return;
     }
 }

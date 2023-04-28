@@ -5,8 +5,8 @@ import java.util.Scanner;
 import controller.MangaController;
 import controller.UserController;
 import view.MangaView;
-import observer.NotifyData;
-import view.OrderView;
+import singleton.Customer;
+import singleton.ShoppingCart;
 import view.UserView;
 
 public class Main {
@@ -15,10 +15,8 @@ public class Main {
         UserView userView = new UserView(userController);
         MangaController bookController = new MangaController();
         MangaView bookView = new MangaView(bookController);
-
-        OrderView borrowingView = new OrderView();
-
-        NotifyData notifyData = new NotifyData();
+        Customer customer= new Customer("Nikith");
+        ShoppingCart shoppingCart = new ShoppingCart(customer);
 
         Scanner scanner = new Scanner(System.in);
 
@@ -42,10 +40,7 @@ public class Main {
                     userView.displayUserMenu();
                     break;
                 case 3:
-                    borrowingView.displayOrders();
-                    break;
-                case 4:
-                    notifyData.displayNotif();
+                    shoppingCart.displayCart();
                     break;
                 case 5:
                     exit = true;

@@ -7,9 +7,9 @@ public class MangaFactory {
         switch (genre) {
             case "Seinin":
                 return new Seinin(id, title, mangaka, genre, stock, price);
-            case "Nonfiction":
+            case "Shonen":
                 return new Shonen(id, title, mangaka, genre, stock, price);
-            case "Reference":
+            case "Shoujo":
                 return new Shoujo(id, title, mangaka, genre, stock, price);
             default:
                 return null;

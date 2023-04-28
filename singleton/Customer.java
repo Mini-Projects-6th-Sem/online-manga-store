@@ -7,12 +7,10 @@ import java.util.HashMap;
 public class Customer {
     private ShoppingCart shoppingCart;
     private String name;
-    private int money;
 
-    public Customer(String name, int money) {
+    public Customer(String name) {
         shoppingCart = new ShoppingCart(this);
         this.name = name;
-        this.money = money;
     }
 
     public void get(Manga manga) {
@@ -29,11 +27,6 @@ public class Customer {
 
     public void pay() {
         shoppingCart.iterations();
-        money -= shoppingCart.getPrice();
-    }
-
-    public int getCash() {
-        return money;
     }
 
     public void pack(Box box) {

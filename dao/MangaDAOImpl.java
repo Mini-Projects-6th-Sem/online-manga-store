@@ -9,9 +9,9 @@ import java.util.List;
 
 public class MangaDAOImpl implements MangaDAO {
 
-    private  String url = "jdbc:mysql://localhost/librarydb";
+    private  String url = "jdbc:mysql://localhost/manga_store";
     private  String user = "root";
-    private  String password = "pranav";
+    private  String password = "@root123";
 
     public MangaDAOImpl() throws SQLException {
         super();
@@ -20,7 +20,7 @@ public class MangaDAOImpl implements MangaDAO {
     Connection connection = DriverManager.getConnection(url, user, password);
 
     public Manga parseManga(ResultSet resultSet) throws SQLException {
-        int ISBN = resultSet.getInt("ISBN");
+        Integer ISBN = resultSet.getInt("ISBN");
         String title = resultSet.getString("title");
         String mangaka = resultSet.getString("mangaka");
         String genre = resultSet.getString("genre");
@@ -31,31 +31,32 @@ public class MangaDAOImpl implements MangaDAO {
 
     @Override
     public List<Manga> getAllMangas() throws SQLException {
-        List<Manga> books = new ArrayList<>();
-        String query = "SELECT * FROM books";
+        List<Manga> mangas = new ArrayList<>();
+        String query = "SELECT * FROM manga";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            books.add(parseManga(resultSet));
+            mangas.add(parseManga(resultSet));
         }
-        return books;
+        return mangas;
     }
     @Override
-    public void addManga(Manga book) throws SQLException {
-        String query = "INSERT INTO books (title, mangaka, genre, stock, price) VALUES (?, ?, ?, ?, ?)";
+    public void addManga(Manga manga) throws SQLException {
+        String query = "INSERT INTO manga (ISBN, title, mangaka, genre, stock, price) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, book.getTitle());
-        statement.setString(2, book.getMangaka());
-        statement.setString(3, book.getGenre());
-        statement.setInt(4, book.getStock());
-        statement.setInt(5, book.getPrice());
+        statement.setInt(1, manga.getISBN());
+        statement.setString(2, manga.getTitle());
+        statement.setString(3, manga.getMangaka());
+        statement.setString(4, manga.getGenre());
+        statement.setInt(5, manga.getStock());
+        statement.setInt(6, manga.getPrice());
         statement.executeUpdate();
     }
 
 
     @Override
     public void deleteManga(int ISBN) throws SQLException {
-        String query = "DELETE FROM books WHERE ISBN = ?";
+        String query = "DELETE FROM manga WHERE ISBN = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, ISBN);
         statement.executeUpdate();
@@ -63,7 +64,7 @@ public class MangaDAOImpl implements MangaDAO {
 
     @Override
     public Manga getMangaById(int ISBN) throws SQLException {
-        String query = "SELECT * FROM books WHERE ISBN = ?";
+        String query = "SELECT * FROM manga WHERE ISBN = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, ISBN);
             ResultSet resultSet = statement.executeQuery();
@@ -75,15 +76,15 @@ public class MangaDAOImpl implements MangaDAO {
         }
     }
 
-    public void updateManga(Manga book) throws SQLException {
-        String query = "UPDATE books SET title = ?, mangaka = ?, genre = ?, stock = ?, price = ? WHERE ISBN = ?";
+    public void updateManga(Manga manga) throws SQLException {
+        String query = "UPDATE manga SET title = ?, mangaka = ?, genre = ?, stock = ?, price = ? WHERE ISBN = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, book.getTitle());
-            statement.setString(2, book.getMangaka());
-            statement.setString(3, book.getGenre());
-            statement.setInt(4, book.getStock());
-            statement.setInt(5, book.getPrice());
-            statement.setInt(6, book.getISBN());
+            statement.setString(1, manga.getTitle());
+            statement.setString(2, manga.getMangaka());
+            statement.setString(3, manga.getGenre());
+            statement.setInt(4, manga.getStock());
+            statement.setInt(5, manga.getPrice());
+            statement.setInt(6, manga.getISBN());
             statement.executeUpdate();
         }
     }
@@ -92,8 +93,8 @@ public class MangaDAOImpl implements MangaDAO {
 
     @Override
     public List<Manga> searchMangas(String keyword) throws SQLException {
-        List<Manga> books = new ArrayList<>();
-        String query = "SELECT * FROM books WHERE title LIKE ? OR mangaka LIKE ? OR genre LIKE ?";
+        List<Manga> mangas = new ArrayList<>();
+        String query = "SELECT * FROM manga WHERE title LIKE ? OR mangaka LIKE ? OR genre LIKE ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, "%" + keyword + "%");
         statement.setString(2, "%" + keyword + "%");
@@ -106,9 +107,9 @@ public class MangaDAOImpl implements MangaDAO {
             String genre = resultSet.getString("genre");
             Integer getStock = resultSet.getInt("stock");
             Integer price = resultSet.getInt("price");
-            Manga book = MangaFactory.createManga(ISBN, title, mangaka, genre, getStock, price);
-            books.add(book);
+            Manga manga = MangaFactory.createManga(ISBN, title, mangaka, genre, getStock, price);
+            mangas.add(manga);
         }
-        return books;
+        return mangas;
     }
 }

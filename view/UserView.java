@@ -59,7 +59,6 @@ public class UserView {
         String phoneNumber = scanner.nextLine();
         System.out.print("Enter user email: ");
         String email = scanner.nextLine();
-        System.out.print("Enter if Notification required (1/0): ");
         User user = new User(name, address, phoneNumber, email);
         userController.addUser(user);
         System.out.println("User added successfully.");

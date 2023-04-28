@@ -82,7 +82,7 @@ public class MangaView {
         }
     }
 
-    private void viewAllMangas() throws SQLException {
+    public void viewAllMangas() throws SQLException {
         List<Manga> mangas = mangaController.getAllMangas();
         System.out.println("List of all mangas:");
         System.out.println("ID\tTitle\tAuthor\tYear\tAvailable");

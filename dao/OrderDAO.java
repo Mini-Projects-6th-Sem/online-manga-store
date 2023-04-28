@@ -24,7 +24,7 @@ public class OrderDAO {
     // Connect to MySQL database
     private static final String url = "jdbc:mysql://localhost:3306/librarydb";
     private static final String username = "root";
-    private static final String password = "pranav";
+    private static final String password = "@root123";
     private Connection connection;
 
     public OrderDAO() {

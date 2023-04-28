@@ -13,17 +13,17 @@ import model.User;
 public class UserDAO {
 
     // SQL queries
-    private static final String INSERT_USER_SQL = "INSERT INTO users (name, address, phone_number, email, msgSub) VALUES (?, ?, ?, ?, ?)";
-    private static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
-    private static final String SELECT_ALL_USERS = "SELECT * FROM users";
-    private static final String DELETE_USER_SQL = "DELETE FROM users WHERE id = ?";
-    private static final String UPDATE_USER_SQL = "UPDATE users SET name = ?, address = ?, phone_number = ?, email = ? WHERE id = ?";
-    private static final String FETCH_SUBS = "Select * from users where msgSub = 1";
+    private static final String INSERT_USER_SQL = "INSERT INTO customer (c_name, c_address, c_phone, c_mail) VALUES (?, ?, ?, ?)";
+    private static final String SELECT_USER_BY_ID = "SELECT * FROM customer WHERE c_id = ?";
+    private static final String SELECT_ALL_USERS = "SELECT * FROM customer";
+    private static final String DELETE_USER_SQL = "DELETE FROM customer WHERE c_id = ?";
+    private static final String UPDATE_USER_SQL = "UPDATE customer SET c_name = ?, c_address = ?, c_phone = ?, c_mail = ? WHERE c_id = ?";
+    private static final String FETCH_SUBS = "Select * from customer where msgSub = 1";
 
     // Connect to MySQL database
-    private static final String url = "jdbc:mysql://localhost:3306/librarydb";
+    private static final String url = "jdbc:mysql://localhost:3306/manga_store";
     private static final String username = "root";
-    private static final String password = "pranav";
+    private static final String password = "@root123";
     private Connection connection;
 
     public UserDAO() {
@@ -43,7 +43,6 @@ public class UserDAO {
             preparedStatement.setString(2, user.getAddress());
             preparedStatement.setString(3, user.getPhoneNumber());
             preparedStatement.setString(4, user.getEmail());
-            preparedStatement.executeUpdate();
             System.out.println("DB inserting user");
         } catch (SQLException e) {
             System.out.println("Error inserting user");
@@ -72,18 +71,18 @@ public class UserDAO {
         return user;
     }
 
-    // Select all users from database
+    // Select all customer from database
     public List<User> selectAllUsers() {
         List<User> users = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String address = resultSet.getString("address");
-                String phoneNumber = resultSet.getString("phone_number");
-                String email = resultSet.getString("email");
+                int id = resultSet.getInt("c_id");
+                String name = resultSet.getString("c_name");
+                String address = resultSet.getString("c_address");
+                String phoneNumber = resultSet.getString("c_phone");
+                String email = resultSet.getString("c_mail");
                 users.add(new User(id, name, address, phoneNumber, email));
             }
         } catch (SQLException e) {
